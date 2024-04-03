@@ -2,9 +2,10 @@ package standard_merkle_tree
 
 import (
 	"bytes"
-	"github.com/pkg/errors"
 	"math"
 	"sort"
+
+	"github.com/pkg/errors"
 )
 
 func abiPackLeafHash(leafEncodings []string, values ...interface{}) ([]byte, error) {
@@ -144,6 +145,8 @@ func getMultiProof(tree [][]byte, indices []int) (*MultiProof, error) {
 			return nil, err
 		}
 	}
+
+	sort.Sort(sort.Reverse(sort.IntSlice(indices)))
 
 	if someValue(indices) {
 		return nil, errors.New("Cannot prove duplicated index")
